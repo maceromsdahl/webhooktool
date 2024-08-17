@@ -24,8 +24,10 @@ except KeyboardInterrupt:
 def send():
     try:
         reset()
+        print("connected (use ctrl+c to exit)")
+        print("Webhook ID: " + y["id"])
         x = input("send: ")
-        data = {"content": x}
+        data = {"content": x, "username": y["name"] + " | webhooktool"}
         requests.post(url, json=data)
     except KeyboardInterrupt:
         cls()
@@ -34,9 +36,6 @@ if ("https://discord.com/api/webhooks/" in url):
     try:
         r = requests.get(url)
         y = json.loads(r.text)
-        reset()
-        print("connected (use ctrl+c to exit)")
-        print("Webhook ID: " + y["id"])
         while(y["id"] != 0):
             send()
     except KeyError:
